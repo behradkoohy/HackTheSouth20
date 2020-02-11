@@ -18,6 +18,9 @@ def generate_graph(f, ticker):
             if (dict.get(ticker)):
                 x_plot.append(k)
                 y_plot.append(dict.get(ticker))
+
+    print(x_plot)
+    print(y_plot)
     fig = plt.figure()
     ax = plt.subplot(111)
     ax.plot(x_plot, y_plot)
@@ -28,3 +31,6 @@ def generate_graph(f, ticker):
 
     fig.savefig(
         "mlh-hackathon-flask-starter-master/app/static/" + ticker + ".png")
+
+
+

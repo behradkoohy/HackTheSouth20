@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, jsonify, request
 from yahoo_fin import stock_info as sf
+from bokeh.plotting import figure, output_file, show
+from bokeh.embed import components
 
 import json
 import os
@@ -38,6 +40,24 @@ def get_image(ticker):
     return image_path
 
 
+def generate_bokeh_graph(f, ticker):
+    da = ""
+    x_plot = []
+    y_plot = []
+    with open(f) as in_file:
+        da = json.loads(in_file.read())
+    for k, list_dicts in da.items():
+        for dict in list_dicts:
+            if (dict.get(ticker)):
+                x_plot.append(float(k))
+                y_plot.append(dict.get(ticker))
+    print(list(map(type, x_plot)))
+    print(list(map(type, y_plot)))
+    p = figure(plot_width=600, plot_height=400)
+    p.line(x_plot, y_plot, line_width=2 )
+    return p
+
+
 @blueprint.route('/', methods=['GET', 'POST'])
 def index():
     print('index')
@@ -68,6 +88,7 @@ def index():
         selected_stock_ticker)
     selected_data['tweets'] = ""
     selected_data['prediction'] = get_prediction(selected_stock_ticker)
-    selected_data['plot'] = get_image(selected_stock_ticker)
-
+    plot = generate_bokeh_graph("../date&score-pairs.json", selected_stock_ticker)
+    selected_data['plot_script'], selected_data['plot_div'] = components(plot) 
+    print(selected_data['plot_script'], selected_data['plot_div'])
     return render_template('home/index.html', stonks=company_data, data=selected_data)

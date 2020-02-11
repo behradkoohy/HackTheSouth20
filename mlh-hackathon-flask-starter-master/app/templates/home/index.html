@@ -1,14 +1,21 @@
 {% extends "layouts/layout.html" %}
 
 {% block header %}
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.js"></script>
+
+
+
 <div class="bg-gray-light border-bottom border-gray-light">
   <div class="container text-center py-5 mb-4">
-      Check the Docs
+      {{ data['plot_script']|safe }}
+      {{ data['plot_div']|safe}}
     </a>
   </div>
 </div>
 {% endblock %}
-<h1>sfsadaf</h1>
+
 {% block content %}
 <div class="text-gray-light text-center py-5 my-5">
   <p>Welcome to the stock predictor application</p>

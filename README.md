@@ -12,12 +12,8 @@ The fetched tweets then go into a sentiment analyser which produces of list of t
 
 ### Prerequisites
 
-You will need to have tweepy and nltk 
 ```
-pip3 install tweepy 
-```
-```
-pip3 install nltk 
+pip3 install -r requirement.txt 
 ```
 ### Installing
 
